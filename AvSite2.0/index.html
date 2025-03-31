@@ -235,15 +235,18 @@
                     <div class="step">
                         <span class="step-number">1</span>
                         <p>Send <strong id="payment-amount">350 KES</strong> to:</p>
-                        <p class="payment-detail">PayBill: <strong>522522</strong></p>
-                        <p class="payment-detail">Account No: <strong>1331124875</strong></p>
+                        <p class="payment-detail">PayBill: <strong>793174</strong></p>
+                        <p class="payment-detail">Account No: <strong>254745087451</strong></p>
                         <p>For: <strong id="package-name">2x Prediction Package</strong></p>
                     </div>
                     <div class="step">
                         <span class="step-number">2</span>
-                        <p>Send payment confirmation via Telegram:</p>
+                        <p>Send payment confirmation via:</p>
                         <a href="https://t.me/Aadmin4cnc" class="telegram-button">
-                            <i class="fab fa-telegram"></i> Send Confirmation
+                            <i class="fab fa-telegram"></i> Telegram
+                        </a>
+                        <a href="https://wa.me/message/CURAIXAL5CFDO1" class="whatsapp-button">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
                         </a>
                         <p>Include your M-Pesa transaction code</p>
                     </div>
@@ -252,7 +255,18 @@
                         <p>Receive your prediction details instantly after verification (usually within 2-5 minutes)</p>
                     </div>
                 </div>
-                <p class="disclaimer" style="margin-top: 1rem;">Note: Predictions are sent via Telegram. Ensure you have an active Telegram account.</p>
+                <p class="disclaimer" style="margin-top: 1rem;">Note: Predictions are sent via Telegram or WhatsApp so make sure you have an active account.</p>
+            </div>
+        </div>
+        <div id="phone-modal" class="modal-overlay hidden">
+            <div class="phone-modal">
+                <h3>Enter Your Phone Number</h3>
+                <p>Please enter your phone number to proceed with the purchase.</p>
+                <input type="tel" id="user-phone" class="phone-input" placeholder="2547XXXXXXXX" required>
+                <div class="modal-buttons">
+                    <button class="modal-button cancel-button" onclick="closePhoneModal()">Cancel</button>
+                    <button class="modal-button next-button" onclick="processPhoneNumber()">Next</button>
+                </div>
             </div>
         </div>
     </main>
@@ -305,6 +319,83 @@
             const modal = document.getElementById('payment-info');
             if (event.target === modal) {
                 closePaymentInfo();
+            }
+        }
+    </script>
+     <script>
+        // Global variables to store purchase details
+        let currentAmount = 0;
+        let currentPackage = '';
+        
+        function showPaymentInfo(amount, packageName) {
+            currentAmount = amount;
+            currentPackage = packageName;
+            
+            // Show phone number modal first
+            document.getElementById('phone-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePaymentInfo() {
+            document.getElementById('payment-info').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function closePhoneModal() {
+            document.getElementById('phone-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function processPhoneNumber() {
+            const phoneNumber = document.getElementById('user-phone').value;
+            
+            // Basic phone number validation
+            if (!phoneNumber || phoneNumber.length < 9) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+            
+            // Send the phone number to your server/telegram
+            sendPhoneNumberToAdmin(phoneNumber, currentPackage, currentAmount);
+            
+            // Close phone modal and show payment info
+            closePhoneModal();
+            
+            if (currentAmount > 0) {
+                document.getElementById('payment-amount').textContent = currentAmount.toLocaleString() + ' KES';
+                document.getElementById('package-name').textContent = currentPackage;
+            }
+            document.getElementById('payment-info').classList.remove('hidden');
+            
+            // Clear the phone number field for next use
+            document.getElementById('user-phone').value = '';
+        }
+        
+        function sendPhoneNumberToAdmin(phoneNumber, packageName, amount) {
+ 
+            const message = `New User Inquiry:\nPhone: ${phoneNumber}\nPackage: ${packageName}\nAmount: ${amount} KES`;
+    
+            const telegramBotToken = '7688438027:AAFNnge7_oADfxCwCMm2XZGSH1hG2Q0rZfE';
+            const chatId = '5900219209';
+            const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+            
+            // Create a temporary image to send the request (this avoids CORS issues)
+            const img = new Image();
+            img.src = telegramUrl;
+            
+            console.log('Phone number sent to admin:', phoneNumber, packageName, amount);
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('payment-info');
+            const phoneModal = document.getElementById('phone-modal');
+            
+            if (event.target === modal) {
+                closePaymentInfo();
+            }
+            
+            if (event.target === phoneModal) {
+                closePhoneModal();
             }
         }
     </script>

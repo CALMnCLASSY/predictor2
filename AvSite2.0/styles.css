@@ -393,6 +393,22 @@ video {
     background-color: #006699;
 }
 
+.whatsapp-button {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+    margin-left: 1rem; /* Add spacing between buttons */
+}
+
+.whatsapp-button:hover {
+    background-color: #1DA851;
+}
+
 /* Footer Styles */
 footer {
     background-color: var(--dark-color);
@@ -468,4 +484,68 @@ footer {
 .footer-section p.guarantee {
     font-size: 0.8rem; /* Smaller font size */
     color: rgba(33, 64, 75, 0.7); /* Whitish color */
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.phone-modal {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.phone-modal h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.phone-input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cancel-button {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.next-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hidden {
+    display: none;
 }
